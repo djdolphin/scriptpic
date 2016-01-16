@@ -44,6 +44,10 @@ import flash.display.*;
 	import util.*;
 	import uiwidgets.*;
 	import scratch.*;
+	import flash.utils.ByteArray;
+	import flash.net.FileReference;
+	import by.blooddy.crypto.image.PNG24Encoder;
+	import by.blooddy.crypto.image.PNGFilter;
 
 public class Block extends Sprite {
 
@@ -883,6 +887,16 @@ public class Block extends Sprite {
 	public function addComment():void {
 		var scriptsPane:ScriptsPane = topBlock().parent as ScriptsPane;
 		if (scriptsPane) scriptsPane.addComment(this);
+	}
+
+	public function saveScreenshot(scale:Number):void {
+		var bitmapData:BitmapData = new BitmapData(this.width * scale, this.height * scale);
+		var m:Matrix = new Matrix();
+		m.scale(scale, scale);
+		bitmapData.draw(this, m);
+		var pngData:ByteArray = PNG24Encoder.encode(bitmapData, PNGFilter.PAETH);
+		var file:FileReference = new FileReference();
+		file.save(pngData, 'block.png');
 	}
 
 	/* Dragging */

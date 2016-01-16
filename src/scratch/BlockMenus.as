@@ -506,6 +506,8 @@ public class BlockMenus implements DragClient {
 			}
 			m.addItem('delete', block.deleteStack);
 			m.addLine();
+			m.addItem('script pic...', scriptPic);
+			m.addLine();
 			m.addItem('add comment', block.addComment);
 		}
 		m.addItem('help', block.showHelp);
@@ -514,6 +516,10 @@ public class BlockMenus implements DragClient {
 
 	private function duplicateStack():void {
 		block.duplicateStack(app.mouseX - startX, app.mouseY - startY);
+	}
+
+	private function scriptPic():void {
+		DialogBox.ask('Scale?', '1', app.stage, block.saveScreenshot)
 	}
 
 	private function changeOpMenu(evt:MouseEvent, opList:Array):void {
